@@ -134,17 +134,17 @@ fi
 
 echo "Starting webserver and WebSockets proxy on port ${PORT}"
 #${HERE}/websockify --web ${WEB} ${CERT:+--cert ${CERT}} ${PORT} ${VNC_DEST} &
-${WEBSOCKIFY} --web ${WEB} ${CERT:+--cert ${CERT}} ${PORT} ${VNC_DEST} &
-proxy_pid="$!"
-sleep 1
-if ! ps -p ${proxy_pid} >/dev/null; then
-    proxy_pid=
-    echo "Failed to start WebSockets proxy"
-    exit 1
-fi
-
-echo -e "\n\nNavigate to this URL:\n"
-echo -e "    http://$(hostname):${PORT}/vnc.html?host=$(hostname)&port=${PORT}\n"
-echo -e "Press Ctrl-C to exit\n\n"
-
-wait ${proxy_pid}
+exec python ${WEBSOCKIFY} --web ${WEB} ${CERT:+--cert ${CERT}} ${PORT} ${VNC_DEST}
+#proxy_pid="$!"
+#sleep 1
+#if ! ps -p ${proxy_pid} >/dev/null; then
+#    proxy_pid=
+#    echo "Failed to start WebSockets proxy"
+#    exit 1
+#fi
+#
+#echo -e "\n\nNavigate to this URL:\n"
+#echo -e "    http://$(hostname):${PORT}/vnc.html?host=$(hostname)&port=${PORT}\n"
+#echo -e "Press Ctrl-C to exit\n\n"
+#
+#wait ${proxy_pid}
