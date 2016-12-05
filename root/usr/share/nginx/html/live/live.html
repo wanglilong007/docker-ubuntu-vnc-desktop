@@ -1,0 +1,42 @@
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="../flowplayer-3.2.13.min.js"></script>
+<title>Live video stream</title>
+</head>
+
+<body>
+
+<h1>Live video stream</h1>
+
+<div id="player" style="width:854px;height:480px"></div>
+
+<p id="streaminfo"></p>
+
+<script type="text/javascript">
+
+m = location.href.match(/^http:\/\/([a-zA-Z0-9._-]+):[0-9]+\/live\/(.*)$/);
+host = m[1];
+name = m[2];
+
+document.getElementById("streaminfo").innerHTML = "Streaming: <b>rtmp://" + host + ":10200/live/" + name + "</b>";
+
+flowplayer("player", "../flowplayer-3.2.18.swf", {
+clip: {
+url: name,
+live: true,
+scaling: "fit",
+provider: "rtmp"
+},
+plugins: {
+rtmp: {
+url: "flowplayer.rtmp-3.2.13.swf",
+netConnectionUrl: "rtmp://" + host + ":10200/live"
+}
+}
+});
+
+</script>
+</body>
+</html>
